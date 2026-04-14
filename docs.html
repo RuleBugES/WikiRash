@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ayuda y Documentación - WikiRASH</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+  <nav class="vector-sidebar">
+    <div class="sidebar-logo">
+      <img src="https://wikirash.onrender.com/logo.png" alt="WikiRASH" />
+      <span>WikiRASH</span>
+    </div>
+    <ul class="sidebar-menu">
+      <li class="glitch-link"><a href="index.html">Portada</a></li>
+      <li><a href="comunidad.html">Portal de la comunidad</a></li>
+      <li><a href="changelog.html">Cambios recientes</a></li>
+      <li class="wobble"><a href="https://wikirash.onrender.com/" target="_blank">Página aleatoria (Jugar)</a></li>
+      <li><a href="docs.html" style="font-weight:bold; color:black;">Ayuda / Documentación</a></li>
+      <li><a href="https://buymeacoffee.com/rulebug" target="_blank" rel="noopener noreferrer">Donaciones</a></li>
+    </ul>
+  </nav>
+
+  <main class="vector-main">
+    <div class="vector-tabs">
+      <ul>
+        <li class="selected"><span>Documentación Técnica</span></li>
+        <li class="shake"><a href="comunidad.html">Soporte</a></li>
+      </ul>
+    </div>
+    
+    <header class="article-header">
+      <h1 class="chaotic-title" style="font-size: 40px; animation: none; text-shadow: none;">Ayuda y Documentación</h1>
+      <div class="hr-line"></div>
+    </header>
+
+    <div class="article-body">
+      <p>Bienvenido a la documentación oficial de <b>WikiRASH</b>. Aquí explicamos la infraestructura subyacente que permite jugar al modo multijugador masivo en tiempo real sin romper Wikipedia (ni enfadar a los administradores de Wikimedia).</p>
+
+      <h2>Topología de Red y Sincronización</h2>
+      <div class="hr-line"></div>
+      <p>WikiRASH utiliza una arquitectura basada en <b>WebSockets (Socket.io)</b> montada sobre un backend en <b>Node.js (Express)</b>. Esto permite eventos de muy baja latencia esenciales para:</p>
+      <ul>
+        <li>Registrar y propagar los clics de cada jugador a la sala en tiempo real.</li>
+        <li>Sincronización del temporizador maestro autoritativo del servidor.</li>
+        <li>Ejecutar penalizaciones instantáneas (Poderes destructivos) como el <i>"Salto en el Tiempo"</i> o la <i>"Congelación"</i>.</li>
+      </ul>
+
+      <h2>El Proxy Anti-Trampas (Anti-Cheat Server)</h2>
+      <div class="hr-line"></div>
+      <p>Dado que Wikipedia es pública y los usuarios podrían usar herramientas de depuración del navegador para hacer trampa, el cliente de WikiRASH no accede directamente a <code>wikipedia.org</code>. En su lugar, toda la navegación y renderizado pasa por nuestro proxy Node.js especializado:</p>
+      <ul>
+        <li><b>Filtro de Inyección:</b> El proxy elimina la barra de búsqueda y los sidebars de la interfaz oficial de Wikipedia que permitirían atajos o teletransportes.</li>
+        <li><b>Protección Homoglyph contra el "Ctrl+F":</b> Para evitar que los jugadores abusen del buscador del navegador para encontrar enlaces escondidos en la sopa de letras, inyectamos un script que cambia aleatoriamente caracteres latinos estándar (como la "a" o la "c") por sus equivalentes visuales en el alfabeto cirílico (Ataque Homógrafo preventivo). A simple vista es el mismo artículo, pero <code>Ctrl+F</code> no funcionará.</li>
+        <li><b>Validación de Tiempos:</b> Verificamos que no se superen los umbrales humanos al navegar. Cualquier navegación menor a cierto límite es ignorada o penalizada.</li>
+      </ul>
+
+      <h2>Economía de Partida y Sistema de Progresión XP</h2>
+      <div class="hr-line"></div>
+      <p>Cada vez que un jugador realiza una acción clave (<i>Navegación Rápida</i>, recolectar un <i>"Doodle Aleatorio"</i> camuflado en el texto, o visitar páginas relevantes), acumula monedas que aplican directamente al menú de <b>Poderes Locos</b> en pantalla.</p>
+      <p>Tras finalizar una carrera (iniciar en el artículo A y alcanzar la meta B), los datos suben al servidor principal: se calcula el XP base y se multiplica por la dificultad de la ruta y las penalizaciones sufridas, dictando su posición global en el Leaderboard.</p>
+
+      <div style="margin-top: 80px; padding-top: 20px; border-top: 1px solid #ccc; font-size: 13px; text-align: center; color: #555;">
+        Hecho con ❤️ y mucho caos por <a href="https://panelrulebug.onrender.com/landing.html" target="_blank" style="color: #0645ad; font-weight: bold; text-decoration: none;">Rulebug Team</a>.
+      </div>
+    </div>
+  </main>
+</body>
+</html>
